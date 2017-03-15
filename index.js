@@ -29,8 +29,30 @@ var db = massive.connect({connectionString : connString},
 
 app.get('/api/users', function(req, res) {
   db.get_all_users(function (err, users) {
-    console.log("all Users")
+    res.send(users);
+  });
+});
+app.get('/api/users/:userId/vehiclecount', function(req, res) {
+  db.get_user_vehicle_count([req.params.userId],function (err, users) {
+    res.send(users[0]);
+  });
+});
+app.get('/api/users/:userId/vehicle', function(req, res) {
+  db.get_user_vehicles([req.params.userId],function (err, users) {
     console.log(users);
+    res.send(users);
+  });
+});
+
+app.get('/api/vehicle?email=UsersEmail', function(req, res) {
+  db.get_user_vehicles_byemail(function (err, users) {
+    // console.log(users);
+    res.send(users);
+  });
+});
+app.get('/api/vehicle', function(req, res) {
+  db.get_user_vehicles_byemail([req.query.email],function (err, users) {
+    console.log(req.query.email);
     res.send(users);
   });
 });
@@ -44,11 +66,9 @@ app.get('/api/vehicles', function(req, res) {
 
 app.post('/api/users', function(req, res) {
   console.log(req.body);
-  var user = req.body;
-  db.create_user(
-    [user.firstname,
-    user.lastname,
-    user.email],function (err, result) {
+  var userObj = req.body;
+  db.create_user( [userObj.firstname,userObj.lastname, userObj.email],
+    function (err, result) {
     if (err) {
       res.status(500).send(err);
     }else {
@@ -56,6 +76,21 @@ app.post('/api/users', function(req, res) {
     }
   });
 });
+
+app.post('/api/vehicles', function(req, res) {
+  console.log(req.body);
+  var vehicleObj = req.body;
+  db.create_vehicle([vehicleObj.make,vehicleObj.model, vehicleObj.year, vehicleObj.ownerId],
+    function (err, result) {
+    if (err) {
+      res.status(500).send(err);
+    }else {
+      res.status(200).send(result);
+    }
+  });
+});
+
+
 
 
 // app.get('/', function(req, res) {

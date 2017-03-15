@@ -5,10 +5,10 @@
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     firstname TEXT,
     lastname TEXT,
-    email TEXT,
+    email TEXT
 );
 
 INSERT INTO users (firstname, lastname, email) VALUES ( 'John', 'Smith', 'John@Smith.com');

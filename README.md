@@ -38,10 +38,10 @@ Mini Coup 2013 - Jane Janis
 
 ## Endpoints & Queries
 GOTCHA: It's important to know that express converts values passed into and accessed off of 'params' into strings. This might not match the data types you set in your schema and will result in errors if they don't.
-* Create an endpoint at `GET '/api/users'` that will query the database and get all users.
-* Create an endpoint at `GET '/api/vehicles'` that will query the database and get all vehicles.
-* Create an endpoint at `POST '/api/users'` that will take a user from the body and add them to the database
-* Create an endpoint at `POST '/api/vehicles'` that will take a vehicle from the body and add it to the database
+*X Create an endpoint at `GET '/api/users'` that will query the database and get all users.
+*X Create an endpoint at `GET '/api/vehicles'` that will query the database and get all vehicles.
+*X Create an endpoint at `POST '/api/users'` that will take a user from the body and add them to the database
+*X Create an endpoint at `POST '/api/vehicles'` that will take a vehicle from the body and add it to the database
 * Create an endpoint at `GET '/api/user/:userId/vehiclecount'` that will return a count of how many vehicles belong to the given user  
   Response should be an object with a count property ie: `{count:1}`
 * Create an endpoint at `GET '/api/user/:userId/vehicle'` that will find all vehicles that belong to the user with the provided users id

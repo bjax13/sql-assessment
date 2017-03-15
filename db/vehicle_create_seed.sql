@@ -5,11 +5,11 @@
 DROP TABLE IF EXISTS vehicles;
 
 CREATE TABLE vehicles (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     make TEXT,
     model TEXT,
     year INTEGER,
-    ownerId INTEGER,
+    ownerId INTEGER foreign Key
 );
 
 INSERT INTO vehicles (make, model, year, ownerId) VALUES ('Toyota', 'Camry', 1991, 1);
