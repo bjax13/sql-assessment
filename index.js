@@ -44,17 +44,20 @@ app.get('/api/users/:userId/vehicle', function(req, res) {
   });
 });
 
-app.get('/api/vehicle?email=UsersEmail', function(req, res) {
-  db.get_user_vehicles_byemail(function (err, users) {
-    // console.log(users);
-    res.send(users);
-  });
-});
+
 app.get('/api/vehicle', function(req, res) {
-  db.get_user_vehicles_byemail([req.query.email],function (err, users) {
-    console.log(req.query.email);
-    res.send(users);
-  });
+  if (req.query.email) {
+    db.get_user_vehicles_byemail([req.query.email],function (err, users) {
+      console.log(req.query.email);
+      res.send(users);
+    });
+  }else if (true) {
+    db.get_user_vehicles_startswith([req.query.userFirstStart+'%'],function (err, users) {
+      console.log(req.query.userFirstStart+'%');
+      console.log(users);
+      res.send(users);
+    });
+  }
 });
 
 app.get('/api/vehicles', function(req, res) {
@@ -63,6 +66,14 @@ app.get('/api/vehicles', function(req, res) {
     res.send(vehicles);
   });
 });
+app.get('/api/newervehiclesbyyear', function(req, res) {
+  db.get_newervehiclesbyyear(function (err, vehicles) {
+    console.log("All Vehicles")
+    res.send(vehicles);
+  });
+});
+
+
 
 app.post('/api/users', function(req, res) {
   console.log(req.body);
@@ -77,6 +88,21 @@ app.post('/api/users', function(req, res) {
   });
 });
 
+app.put('/api/vehicle/:vehicleId/user/:userId', function(req, res) {
+
+
+
+  db.update_vehicle_owner( [req.params.vehicleId , req.params.userId],
+    function (err, result) {
+    if (err) {
+      res.status(500).send(err);
+    }else {
+      res.status(200).send(result);
+    }
+  });
+
+});
+
 app.post('/api/vehicles', function(req, res) {
   console.log(req.body);
   var vehicleObj = req.body;
@@ -86,6 +112,28 @@ app.post('/api/vehicles', function(req, res) {
       res.status(500).send(err);
     }else {
       res.status(200).send(result);
+    }
+  });
+});
+
+app.delete('/api/user/:userId/vehicle/:vehicleId', function (req, res) {
+  db.delete_vehicle_owner( [req.params.vehicleId ],
+    function (err, result) {
+    if (err) {
+      res.status(500).send(err);
+    }else {
+      res.status(200).send(result);
+    }
+  });
+});
+
+app.delete('/api/vehicle/:vehicleId', function (req, res) {
+  db.delete_vehicle( [req.params.vehicleId ],
+    function (err, result) {
+    if (err) {
+      res.status(500).send(err);
+    }else {
+      res.status(200).send('Successfully Deleted');
     }
   });
 });
